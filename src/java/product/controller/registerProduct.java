@@ -21,15 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package db;
+package product.controller;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author Miguel
- * @param <T> Class
- * @param <K> ID
  */
-public abstract class DatabaseHandler <T, K>{
-    public abstract T[] getAll();
-    public abstract T get(K code);
+public class registerProduct extends HttpServlet{
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        
+    }
 }

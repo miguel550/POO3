@@ -23,22 +23,43 @@
  */
 package db.impl;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.support.ConnectionSource;
 import db.DatabaseHandler;
+import db.Database;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import product.model.Product;
+import product.model.ProductContext;
 
 /**
  *
  * @author Miguel
  */
-public class DatabaseHandlerProduct extends DatabaseHandler<Product, String>{
-
+public class DatabaseHandlerProduct extends DatabaseHandler<ProductContext, String>{
+    private final ConnectionSource cs;
+    private final Dao<ProductContext, String> dao;
+    public DatabaseHandlerProduct(String db) throws SQLException{
+        cs = new Database(db).getConnection();
+        dao = DaoManager.createDao(cs, ProductContext.class);
+    }
+    public Dao<ProductContext, String> getDao(){
+        return this.dao;
+    }
     @Override
-    public Product[] getAll() {
+    public ProductContext[] getAll() {
         return null;
     }
 
     @Override
-    public Product get(String code) {
+    public ProductContext get(String code) {
+        try {
+            return dao.queryForId(code);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandlerProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
     

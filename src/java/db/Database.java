@@ -21,22 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package db;
 
-package db
-
-import com.j256.ormlite.jdbc.JdbcConnectionSource
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+import java.sql.SQLException;
 
 /**
  *
  * @author Miguel
  */
 public class Database {
-        static conSource
-	Database(databaseUrl){
-            conSource = new JdbcConnectionSource(databaseUrl)
-        }
-        public getConnection(){
-            return conSource
-        }      
+    ConnectionSource cs;
+    public Database(String databaseUrl) throws SQLException{
+        this.cs = new JdbcConnectionSource(databaseUrl);
+    }
+    public ConnectionSource getConnection(){
+        return this.cs;
+    }
 }
-

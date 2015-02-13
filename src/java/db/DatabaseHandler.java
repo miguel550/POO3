@@ -23,16 +23,13 @@
  */
 package db;
 
-import product.model.Product;
-import transaction.model.Transaction;
-
 /**
  *
  * @author Miguel
+ * @param <T>
+ * @param <K>
  */
-public abstract class DatabaseHandler {
-    public abstract Product[] getAllProduct();
-    public abstract Product getProduct(String code);
-    public abstract Transaction[] getAllTransactions();
-    public abstract Transaction getTransactions();
+public abstract class DatabaseHandler <T, K>{
+    public abstract T[] getAll();
+    public abstract T get(K code);
 }

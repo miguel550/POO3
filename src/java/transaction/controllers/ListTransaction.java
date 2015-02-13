@@ -21,16 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package db;
+package transaction.controllers;
 
 /**
  *
  * @author Miguel
- * @param <T> Class
- * @param <K> ID
  */
-public abstract class DatabaseHandler <T, K> {
-    protected final String dbURL = "jdbc:mysql://localhost/poo?user=poo&password=poopoo";
-    public abstract T[] getAll();
-    public abstract T get(K code);
+public class ListTransaction {
+    
 }

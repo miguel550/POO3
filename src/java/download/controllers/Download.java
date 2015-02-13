@@ -21,16 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package db;
+package download.controllers;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author Miguel
- * @param <T> Class
- * @param <K> ID
  */
-public abstract class DatabaseHandler <T, K> {
-    protected final String dbURL = "jdbc:mysql://localhost/poo?user=poo&password=poopoo";
-    public abstract T[] getAll();
-    public abstract T get(K code);
+@WebServlet(name = "download", urlPatterns = "/download")
+public class Download extends HttpServlet{
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+    }
+    
 }

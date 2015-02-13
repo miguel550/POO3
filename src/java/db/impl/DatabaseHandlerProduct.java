@@ -26,12 +26,12 @@ package db.impl;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import db.DatabaseHandler;
 import db.Database;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import product.model.Product;
 import product.model.ProductContext;
 
 /**
@@ -39,14 +39,17 @@ import product.model.ProductContext;
  * @author Miguel
  */
 public class DatabaseHandlerProduct extends DatabaseHandler<ProductContext, String>{
-    private final ConnectionSource cs;
-    private final Dao<ProductContext, String> dao;
-    public DatabaseHandlerProduct(String db) throws SQLException{
-        cs = new Database(db).getConnection();
-        dao = DaoManager.createDao(cs, ProductContext.class);
+    private static ConnectionSource cs;
+    private static Dao<ProductContext, String> dao;
+    public DatabaseHandlerProduct() throws SQLException{
+        if(cs == null){
+            cs = new Database(dbURL).getConnection();
+            dao = DaoManager.createDao(cs, ProductContext.class);
+        }
+        TableUtils.createTableIfNotExists(cs, ProductContext.class);
     }
     public Dao<ProductContext, String> getDao(){
-        return this.dao;
+        return dao;
     }
     @Override
     public ProductContext[] getAll() {

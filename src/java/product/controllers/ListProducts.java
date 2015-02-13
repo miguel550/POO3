@@ -21,26 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package product.controller;
-
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package product.controllers;
 
 /**
  *
  * @author Miguel
  */
-@WebServlet(name = "RegisterProduct", urlPatterns = {"/rp"}) 
-public class registerProduct extends HttpServlet{
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException {
-        String code = req.getParameter("code");
-        String name = req.getParameter("name");
-        
-    }
+public class ListProducts {
+    
 }

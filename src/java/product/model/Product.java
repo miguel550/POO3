@@ -39,7 +39,7 @@ public class Product implements ICRUD{
     public Product(ProductContext pc){
         this.pc = pc;
         try {
-            this.dhp = new DatabaseHandlerProduct("jdbc:h2:mem:product");
+            this.dhp = new DatabaseHandlerProduct();
         } catch (SQLException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Hubo un error inicializando DatabaseHandlerProduct");
@@ -47,6 +47,9 @@ public class Product implements ICRUD{
     }
     public ProductContext getProduct(){
         return this.pc;
+    }
+    public DatabaseHandlerProduct getDHP(){
+        return this.dhp;
     }
     @Override
     public void create() {

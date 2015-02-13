@@ -9,41 +9,31 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     </head>
     <body>
-        <form action="rp" method="post">
+        <div class="container">
             <table>
-                <thead></thead>
                 <tbody>
                     <tr>
                         <td>
-                            Codigo:
+                            <a class="btn btn-default" role="button" href="product/add.html">Add a new product</a>
                         </td>
                         <td>
-                            <input type="text" name="code"/>
+                            <a class="btn btn-default" role="button" href="#" >List all products</a>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Name:</td>
-                        <td><input type="text" name="name"/></td>
-                    </tr>
-                    <tr>
-                        <td>Description:</td>
-                        <td><input type="text" name="description"/></td>
-                    </tr>
-                    <tr>
-                        <td>Cost:</td>
-                        <td><input type="text" name="cost"/></td>
-                    </tr>
-                    <tr>
-                        <td>Price:</td>
-                        <td><input type="text" name="price"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><input type="submit" /></td>
+                        <td>
+                            <a class="btn btn-default" role="button" href="#" >Make transaction</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-default" role="button" href="#" >List transactions</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-default" role="button" href="#" >Download a text file with all the data</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-        </form>
+        </div>
     </body>
 </html>

@@ -21,22 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package db.impl;
 
-package db
-
-import com.j256.ormlite.jdbc.JdbcConnectionSource
+import db.DatabaseHandler;
+import product.model.Product;
 
 /**
  *
  * @author Miguel
  */
-public class Database {
-        static conSource
-	Database(databaseUrl){
-            conSource = new JdbcConnectionSource(databaseUrl)
-        }
-        public getConnection(){
-            return conSource
-        }      
-}
+public class DatabaseHandlerProduct extends DatabaseHandler<Product, String>{
 
+    @Override
+    public Product[] getAll() {
+        return null;
+    }
+
+    @Override
+    public Product get(String code) {
+        return null;
+    }
+    
+}

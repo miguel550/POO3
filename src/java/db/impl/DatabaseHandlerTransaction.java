@@ -21,22 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package db.impl;
 
-package db
-
-import com.j256.ormlite.jdbc.JdbcConnectionSource
+import db.DatabaseHandler;
+import transaction.model.Transaction;
 
 /**
  *
  * @author Miguel
  */
-public class Database {
-        static conSource
-	Database(databaseUrl){
-            conSource = new JdbcConnectionSource(databaseUrl)
-        }
-        public getConnection(){
-            return conSource
-        }      
-}
+public class DatabaseHandlerTransaction extends DatabaseHandler<Transaction, String>{
 
+    @Override
+    public Transaction[] getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Transaction get(String code) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+}

@@ -23,6 +23,8 @@
  */
 package db;
 
+import java.util.List;
+
 /**
  *
  * @author Miguel
@@ -31,6 +33,6 @@ package db;
  */
 public abstract class DatabaseHandler <T, K> {
     protected final String dbURL = "jdbc:mysql://localhost/poo?user=poo&password=poopoo";
-    public abstract T[] getAll();
+    public abstract List<T> getAll();
     public abstract T get(K code);
 }

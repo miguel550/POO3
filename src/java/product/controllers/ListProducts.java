@@ -23,10 +23,35 @@
  */
 package product.controllers;
 
+import db.impl.DatabaseHandlerProduct;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author Miguel
  */
-public class ListProducts {
+@WebServlet(name = "ListProducts", urlPatterns = "/product/listAll")
+public class ListProducts extends HttpServlet{
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+        throws ServletException, IOException {
+        try {
+            req.setAttribute("list", new DatabaseHandlerProduct().getAll());
+            req.getRequestDispatcher("/POO3/product/list.jsp").forward(req, resp);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListProducts.class.getName()).log(Level.SEVERE, null, ex);
+            req.setAttribute("list", "ERROR");
+            req.getRequestDispatcher("/POO3/product/list.jsp").forward(req, resp);
+        }
+    }
     
 }

@@ -24,6 +24,7 @@
 package db.impl;
 
 import db.DatabaseHandler;
+import java.util.List;
 import transaction.model.Transaction;
 
 /**
@@ -33,7 +34,7 @@ import transaction.model.Transaction;
 public class DatabaseHandlerTransaction extends DatabaseHandler<Transaction, String>{
 
     @Override
-    public Transaction[] getAll() {
+    public List<Transaction> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

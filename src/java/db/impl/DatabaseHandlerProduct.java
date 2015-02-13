@@ -30,6 +30,7 @@ import com.j256.ormlite.table.TableUtils;
 import db.DatabaseHandler;
 import db.Database;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import product.model.ProductContext;
@@ -52,7 +53,12 @@ public class DatabaseHandlerProduct extends DatabaseHandler<ProductContext, Stri
         return dao;
     }
     @Override
-    public ProductContext[] getAll() {
+    public List<ProductContext> getAll() {
+        try {
+            return dao.queryForAll();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandlerProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 

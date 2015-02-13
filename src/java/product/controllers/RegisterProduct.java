@@ -38,31 +38,38 @@ import product.model.ProductContext;
  *
  * @author Miguel
  */
-@WebServlet(name = "RegisterProduct", urlPatterns = {"/rp"}) 
+@WebServlet(name = "RegisterProduct", urlPatterns = {"/product/addProduct"}) 
 public class RegisterProduct extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
+        
         String code = req.getParameter("code");
         String name = req.getParameter("name");
         String desc = req.getParameter("description");
         String cost = req.getParameter("cost");
         String price = req.getParameter("price");
-        if(code.isEmpty() || name.isEmpty() || desc.isEmpty() || cost.isEmpty() || price.isEmpty()){
-            req.setAttribute("message", "Debe introducir todos los parametros.");
-            req.getRequestDispatcher("result.jsp").forward(req, resp);
-            req.setAttribute("backPath", req.getPathInfo());
+        String state = req.getParameter("state");
+        
+        if(code.isEmpty() || name.isEmpty() || cost.isEmpty() 
+                || price.isEmpty() || state.isEmpty()){
+            req.setAttribute("messages", "Debe introducir todos los parametros.");
+            req.setAttribute("backPath", req.getContextPath());
+            req.getRequestDispatcher("/result.jsp").forward(req, resp);
             return;
         }
+        
         ProductContext p = new ProductContext(code);
         p.setDescription(desc);
         p.setCost(Double.valueOf(cost));
         p.setPrice(Double.valueOf(price));
         p.setName(name);
-        Product pr = new Product(p);
-        pr.create();
-        req.setAttribute("message", String.format("El producto %s se ha ingresado exitosamente.", pr.getProduct().getName()));
-        req.setAttribute("backPath", req.getPathInfo());
-        req.getRequestDispatcher("result.jsp").forward(req, resp);
+        p.setState(state);
+        
+        new Product(p).create();
+        
+        req.setAttribute("messages", String.format("El producto %s se ha ingresado exitosamente.", p.getName()));
+        req.setAttribute("backPath", req.getContextPath());
+        req.getRequestDispatcher("/result.jsp").forward(req, resp);
     }
 }

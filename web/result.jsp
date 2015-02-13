@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>
-            ${message}
+            ${messages}
         </h1>
         <a href="${backPath}">Back</a>
     </body>

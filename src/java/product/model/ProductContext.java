@@ -32,18 +32,20 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "products")
 public class ProductContext {
+    
     @DatabaseField(id = true)
     private String code;
     @DatabaseField(canBeNull = false)
     private String name;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = true)
     private String description;
     @DatabaseField(canBeNull = false)
     private double cost;
     @DatabaseField(canBeNull = false)
     private double price;
     @DatabaseField(canBeNull = false)
-    private int state;
+    private String state;
+    
     public ProductContext(){
         
     }
@@ -72,7 +74,8 @@ public class ProductContext {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if(description.isEmpty()) this.description = null;
+        else this.description = description;
     }
 
     public double getCost() {
@@ -91,11 +94,11 @@ public class ProductContext {
         this.price = price;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
     

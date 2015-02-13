@@ -1,0 +1,71 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2015 Miguel.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+package transaction.model;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+/**
+ *
+ * @author Miguel
+ */
+@DatabaseTable(tableName = "transactions")
+public class TransactionContext {
+    @DatabaseField(id = true)
+    private String id;
+    @DatabaseField
+    private String[] productCodes;
+    @DatabaseField
+    private String PucharseType;
+
+    public String getId() {
+        return id;
+    }
+
+    public String[] getProductCodes() {
+        return productCodes;
+    }
+
+    public void setProductCodes(String[] productCodes) {
+        this.productCodes = productCodes;
+    }
+
+    public String getPucharseType() {
+        return PucharseType;
+    }
+
+    public void setPucharseType(String PucharseType) {
+        this.PucharseType = PucharseType;
+    }
+
+    public String getTransactionType() {
+        return TransactionType;
+    }
+
+    public void setTransactionType(String TransactionType) {
+        this.TransactionType = TransactionType;
+    }
+    @DatabaseField
+    private String TransactionType;
+}

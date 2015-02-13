@@ -21,39 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package product.model;
+package db.impl;
 
-import db.ICRUD;
+import db.DatabaseHandler;
+import product.model.Product;
+import transaction.model.Transaction;
 
 /**
  *
  * @author Miguel
  */
-public class Product implements ICRUD{
-    private final ProductContext pc;
-    public Product(ProductContext pc){
-        this.pc = pc;
-    }
-    public ProductContext getProduct(){
-        return this.pc;
-    }
+public class DatabaseHandlerImpl extends DatabaseHandler{
+
     @Override
-    public void create() {
-        
+    public Product[] getAllProduct() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void read() {
-        
+    public Product getProduct(String code) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update() {
-        
+    public Transaction[] getAllTransactions() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete() {
-        
+    public Transaction getTransactions() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

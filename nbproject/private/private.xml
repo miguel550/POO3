@@ -6,6 +6,12 @@
             <file>file:/C:/Users/Miguel/Documents/NetBeansProjects/POOE3/web/index.html</file>
             <file>file:/C:/Users/Miguel/Documents/NetBeansProjects/POOE3/src/java/product/ProductContext.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/Miguel/Documents/NetBeansProjects/POOE3/src/java/db/DatabaseHandler.java</file>
+            <file>file:/C:/Users/Miguel/Documents/NetBeansProjects/POOE3/web/product/list.jsp</file>
+            <file>file:/C:/Users/Miguel/Documents/NetBeansProjects/POOE3/web/product/add.html</file>
+            <file>file:/C:/Users/Miguel/Documents/NetBeansProjects/POOE3/src/java/db/impl/DatabaseHandlerProduct.java</file>
+            <file>file:/C:/Users/Miguel/Documents/NetBeansProjects/POOE3/src/java/product/controllers/ProductHandler.java</file>
+        </group>
     </open-files>
 </project-private>

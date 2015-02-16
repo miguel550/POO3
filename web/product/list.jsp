@@ -39,13 +39,16 @@
                         Price
                     </th>
                     <th>
-                        Editar
                     </th>
                     <th>
-                        Eliminar
                     </th>
                 </tr>
-                <% ArrayList<ProductContext> l = (ArrayList<ProductContext>) request.getAttribute("list"); 
+                <% ArrayList<ProductContext> l = (ArrayList<ProductContext>) request.getAttribute("list");
+                   if(l.isEmpty()){ %>
+                   <tr >
+                       <td colspan="6">No hay productos para mostrar.</td>
+                   </tr>
+                   <% }else{
                    for(ProductContext p : l){ %>
                    <tr>
                        <td><%= p.getCode() %></td>
@@ -54,11 +57,24 @@
                        <td><%= p.getDescription() %></td>
                        <td><%= String.format("%.2f", p.getCost()) %></td>
                        <td><%= String.format("%.2f", p.getPrice()) %></td>
-                       <td><form action="<%=%>" method="put"><input type="text" hidden="" name="edit" value="<%= p.getCode() %>" /><button type="submit">Edit</button></form></td>
-                       <td><form action="<%=%>" method="delete"><input type="text" hidden="" name="delete" value="<%= p.getCode() %>" /><button type="submit">Delete</button></form></td>
+                       <td>
+                           <form action="ph" method="put">
+                               <input type="hidden" name="_method" value="put" />
+                               <input type="hidden" name="_action" value="edit"/>
+                               <input type="hidden" name="code" value="<%= p.getCode() %>" />
+                               <button type="submit">Edit</button>
+                           </form>
+                       </td>
+                       <td>
+                           <form action="ph" method="delete">
+                               <input type="hidden" name="_method" value="delete" />
+                               <input type="hidden" name="code" value="<%= p.getCode() %>" />
+                               <button type="submit">Delete</button>
+                           </form>
+                       </td>
 
                    </tr>
-                <% } %>
+                <% }} %>
             </tbody>
         </table>
     </body>

@@ -43,7 +43,6 @@ import product.model.ProductContext;
 @WebServlet(name = "ProductHandler", urlPatterns = {"/product/ph"}) 
 public class ProductHandler extends HttpServlet{
     
-    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
@@ -81,13 +80,79 @@ public class ProductHandler extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
-        try {
-            req.setAttribute("list", new DatabaseHandlerProduct().getAll());
-            req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
-            req.setAttribute("list", "ERROR");
-            req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+        
+        String method;
+        if((method = req.getParameter("_method")) != null){
+            
+            switch (method) {
+                case "put":
+                    this.doPut(req, resp);
+                    break;
+                case "delete":
+                    this.doDelete(req, resp);
+                    break;
+            }
+            
+        } else {
+            
+            try {
+                req.setAttribute("list", new DatabaseHandlerProduct().getAll());
+                req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
+                req.setAttribute("list", "ERROR");
+                req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+            }
+            
+        }
+    }
+    
+    
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        switch(req.getParameter("_action")){
+            case "edit":
+                try {
+                    req.setAttribute("product", new DatabaseHandlerProduct().get(req.getParameter("code")));
+                    req.setAttribute("backPath", req.getContextPath());
+                    req.getRequestDispatcher("/product/edit.jsp").forward(req, resp);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    req.setAttribute("messages", "Ha ocurrido un error.");
+                    req.setAttribute("backPath", req.getContextPath());
+                    req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                }
+                break;
+            case "form":
+                    String code = req.getParameter("code");
+                    String name = req.getParameter("name");
+                    String desc = req.getParameter("description");
+                    String cost = req.getParameter("cost");
+                    String price = req.getParameter("price");
+                    String state = req.getParameter("state");
+        
+                    if(code.isEmpty() || name.isEmpty() || cost.isEmpty() 
+                            || price.isEmpty() || state.isEmpty()){
+                        req.setAttribute("messages", "Debe introducir todos los parametros.");
+                        req.setAttribute("backPath", req.getContextPath());
+                        req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                        return;
+                    }
+
+                    ProductContext p = new ProductContext(code);
+                    p.setDescription(desc);
+                    p.setCost(Double.valueOf(cost));
+                    p.setPrice(Double.valueOf(price));
+                    p.setName(name);
+                    p.setState(state);
+
+                    new Product(p).update();
+
+                    req.setAttribute("messages", String.format("El producto %s se ha editado exitosamente.", p.getName()));
+                    req.setAttribute("backPath", req.getContextPath());
+                    req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                break;
         }
     }
     
@@ -95,14 +160,15 @@ public class ProductHandler extends HttpServlet{
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
-        
-    }
-    
-    
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException {
-        
+        try {
+            new Product(new DatabaseHandlerProduct().get(req.getParameter("code"))).delete();
+            req.setAttribute("_method", null);
+            req.setAttribute("messages", String.format("El producto %s se ha eliminado exitosamente.", req.getParameter("code")));
+            req.setAttribute("backPath", req.getContextPath());
+            req.getRequestDispatcher("/result.jsp").forward(req, resp);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

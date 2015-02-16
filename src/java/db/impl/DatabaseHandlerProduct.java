@@ -44,10 +44,13 @@ public class DatabaseHandlerProduct extends DatabaseHandler<ProductContext, Stri
     private static Dao<ProductContext, String> dao;
     public DatabaseHandlerProduct() throws SQLException{
         if(cs == null){
-            cs = new Database(dbURL).getConnection();
+            if(debug)
+                cs = new Database(dbURLDebug).getConnection();
+            else
+                cs = new Database(dbURL).getConnection();
             dao = DaoManager.createDao(cs, ProductContext.class);
         }
-        TableUtils.createTableIfNotExists(cs, ProductContext.class);
+        //TableUtils.createTableIfNotExists(cs, ProductContext.class);
     }
     public Dao<ProductContext, String> getDao(){
         return dao;

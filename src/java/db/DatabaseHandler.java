@@ -33,6 +33,8 @@ import java.util.List;
  */
 public abstract class DatabaseHandler <T, K> {
     protected final String dbURL = "jdbc:mysql://localhost/poo?user=poo&password=poopoo";
+    protected final String dbURLDebug = "jdbc:derby://localhost:1527/poo";
+    protected final boolean debug = true;
     public abstract List<T> getAll();
     public abstract T get(K code);
 }

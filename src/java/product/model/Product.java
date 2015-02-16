@@ -73,7 +73,15 @@ public class Product implements ICRUD{
 
     @Override
     public void update() {
-        this.create();
+        try {
+            if(dhp.getDao().idExists(this.pc.getCode())){
+                this.create();
+            }else{
+                //dhp.getDao().updateId(pc, null); // Edit
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

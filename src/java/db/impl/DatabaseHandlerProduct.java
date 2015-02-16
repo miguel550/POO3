@@ -50,7 +50,8 @@ public class DatabaseHandlerProduct extends DatabaseHandler<ProductContext, Stri
                 cs = new Database(dbURL).getConnection();
             dao = DaoManager.createDao(cs, ProductContext.class);
         }
-        //TableUtils.createTableIfNotExists(cs, ProductContext.class);
+        if(!dao.isTableExists())
+            TableUtils.createTableIfNotExists(cs, ProductContext.class);
     }
     public Dao<ProductContext, String> getDao(){
         return dao;

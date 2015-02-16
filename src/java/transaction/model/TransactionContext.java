@@ -32,14 +32,14 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "transactions")
 public class TransactionContext {
-    @DatabaseField(id = true)
-    private String id;
+    @DatabaseField(generatedId = true)
+    private int id;
     @DatabaseField
     private String[] productCodes;
     @DatabaseField
     private String PucharseType;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

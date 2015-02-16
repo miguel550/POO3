@@ -33,11 +33,29 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Miguel
  */
-public class RegisterTransaction extends HttpServlet{
+public class TransactionHandler extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
         throws ServletException, IOException {
         
-    }  
+    }
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        super.doPut(req, resp); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        super.doGet(req, resp); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        super.doDelete(req, resp); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

@@ -15,6 +15,7 @@
         <form action="ph" method="put">
             <input type="hidden" name="_method" value="put"/>
             <input type="hidden" name="_action" value="form"/>
+            <input type="hidden" name="_code" value="${product.getCode()}"/>
             <table>
                 <thead></thead>
                 <tbody>

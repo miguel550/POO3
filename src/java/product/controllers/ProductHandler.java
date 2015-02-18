@@ -125,7 +125,8 @@ public class ProductHandler extends HttpServlet{
                 }
                 break;
             case "form":
-                    String code = req.getParameter("code");
+                    String code = req.getParameter("_code");
+                    String newCode = req.getParameter("code");
                     String name = req.getParameter("name");
                     String desc = req.getParameter("description");
                     String cost = req.getParameter("cost");
@@ -140,18 +141,26 @@ public class ProductHandler extends HttpServlet{
                         return;
                     }
 
-                    ProductContext p = new ProductContext(code);
-                    p.setDescription(desc);
-                    p.setCost(Double.valueOf(cost));
-                    p.setPrice(Double.valueOf(price));
-                    p.setName(name);
-                    p.setState(state);
+                    ProductContext p = null;
+                    try {
+                        p = new DatabaseHandlerProduct().get(code);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(p != null){
+                        p.setCode(newCode);
+                        p.setDescription(desc);
+                        p.setCost(Double.valueOf(cost));
+                        p.setPrice(Double.valueOf(price));
+                        p.setName(name);
+                        p.setState(state);
 
-                    new Product(p).update();
+                        new Product(p).update();
 
-                    req.setAttribute("messages", String.format("El producto %s se ha editado exitosamente.", p.getName()));
-                    req.setAttribute("backPath", req.getContextPath());
-                    req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                        req.setAttribute("messages", String.format("El producto %s se ha editado exitosamente.", p.getName()));
+                        req.setAttribute("backPath", req.getContextPath());
+                        req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                    }
                 break;
         }
     }

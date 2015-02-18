@@ -25,13 +25,14 @@ package product.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import db.TimeStamp;
 
 /**
  *
  * @author Miguel
  */
 @DatabaseTable(tableName = "products")
-public class ProductContext {
+public class ProductContext extends TimeStamp{
     
     @DatabaseField(id = true)
     private String code;
@@ -46,10 +47,14 @@ public class ProductContext {
     @DatabaseField(canBeNull = false)
     private String state;
     
+    private String newCode;
+    private boolean codeChange;
+    
     public ProductContext(){
-        
+        super();
     }
     public ProductContext(String code) {
+        super();
         this.code = code;
     }
 
@@ -58,9 +63,19 @@ public class ProductContext {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        if(this.code.isEmpty())
+            this.code = code;
+        else if(!this.code.equals(code)){
+                this.newCode = code;
+                this.codeChange = true;
+        }
     }
-
+    public String getNewCode(){
+        return this.newCode;
+    }
+    public boolean isCodeChange(){
+        return this.codeChange;
+    }
     public String getName() {
         return name;
     }

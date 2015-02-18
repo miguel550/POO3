@@ -54,7 +54,7 @@ public class Product implements ICRUD{
     @Override
     public void create() {
         try {
-            dhp.getDao().createOrUpdate(pc);
+            dhp.getDao().create(pc);
         } catch (SQLException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Hubo un error en createOrUpdate de product");
@@ -73,7 +73,13 @@ public class Product implements ICRUD{
 
     @Override
     public void update() {
-        this.create();
+        pc.edited();
+        try {
+            dhp.getDao().update(pc);
+            if(pc.isCodeChange()) dhp.getDao().updateId(pc, pc.getNewCode());
+        } catch (SQLException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

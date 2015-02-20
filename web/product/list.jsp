@@ -39,6 +39,7 @@
                         Price
                     </th>
                     <th>
+                        Fecha de Registro
                     </th>
                     <th>
                     </th>
@@ -57,6 +58,7 @@
                        <td><%= p.getDescription() %></td>
                        <td><%= String.format("%.2f", p.getCost()) %></td>
                        <td><%= String.format("%.2f", p.getPrice()) %></td>
+                       <td><%= p.getDate() %></td>
                        <td>
                            <form action="ph" method="put">
                                <input type="hidden" name="_method" value="put" />

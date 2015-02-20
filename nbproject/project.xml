@@ -12,11 +12,11 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${libs.groovy-all.classpath}</file>
+                    <file>${file.reference.ormlite-core-4.48.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.ormlite-core-4.48.jar}</file>
+                    <file>${libs.groovy-all.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

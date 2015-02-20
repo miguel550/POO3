@@ -117,4 +117,8 @@ public class ProductContext extends TimeStamp{
         this.state = state;
     }
     
+    public String getDate(){
+        return this.createdAt.toString();
+    }
+    
 }

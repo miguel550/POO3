@@ -41,4 +41,10 @@ public abstract class TimeStamp {
     public void edited(){
         this.updatedAt = new Date();
     }
+    public Date getCreateTime(){
+        return this.createdAt;
+    }
+    public Date getEditTime(){
+        return this.updatedAt;
+    }
 }

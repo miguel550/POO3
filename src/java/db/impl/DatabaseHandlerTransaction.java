@@ -40,7 +40,7 @@ import transaction.model.TransactionContext;
  *
  * @author Miguel
  */
-public class DatabaseHandlerTransaction extends DatabaseHandler<TransactionContext, Date>{
+public class DatabaseHandlerTransaction extends DatabaseHandler<TransactionContext, Integer>{
     private static ConnectionSource cs;
     private static Dao<TransactionContext, Integer> dao;
     public DatabaseHandlerTransaction() throws SQLException{
@@ -68,9 +68,9 @@ public class DatabaseHandlerTransaction extends DatabaseHandler<TransactionConte
     }
 
     @Override
-    public TransactionContext get(Date createdAt) {
+    public TransactionContext get(Integer id) {
         try {
-            return dao.queryForEq("created_at", createdAt).get(0);
+            return dao.queryForId(id);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandlerTransaction.class.getName()).log(Level.SEVERE, null, ex);
         }

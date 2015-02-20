@@ -23,6 +23,7 @@
  */
 package transaction.controllers;
 
+import db.impl.DatabaseHandlerProduct;
 import db.impl.DatabaseHandlerTransaction;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -67,19 +68,76 @@ public class TransactionHandler extends HttpServlet{
         
         new Transaction(tc).create();
         
-        req.setAttribute("messages", String.format("La transaccion %s se ha hecho exitosamente.", tc.getId()));
+        req.setAttribute("messages", String.format("La transaccion #%s se ha hecho exitosamente.", tc.getId()));
         req.setAttribute("backPath", req.getContextPath());
         req.getRequestDispatcher("/result.jsp").forward(req, resp);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp); //To change body of generated methods, choose Tools | Templates.
+        try {
+
+            new Transaction(new DatabaseHandlerTransaction().get(Integer.parseInt(req.getParameter("_id")))).delete();
+
+            req.setAttribute("_method", null);
+            req.setAttribute("messages", String.format("La transaccion #%s se ha eliminado exitosamente.", req.getParameter("_id")));
+            req.setAttribute("backPath", req.getContextPath());
+            req.getRequestDispatcher("/result.jsp").forward(req, resp);
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp); //To change body of generated methods, choose Tools | Templates.
+        switch(req.getParameter("_action")){
+            case "edit":
+                try {
+                    req.setAttribute("transaction", new DatabaseHandlerTransaction().get(Integer.parseInt(req.getParameter("_id"))));
+                    req.setAttribute("list", new DatabaseHandlerProduct().getAll());
+                    req.setAttribute("backPath", req.getContextPath());
+                    req.getRequestDispatcher("/transaction/edit.jsp").forward(req, resp);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TransactionHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    req.setAttribute("messages", "Ha ocurrido un error.");
+                    req.setAttribute("backPath", req.getContextPath());
+                    req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                }
+                break;
+            case "form":
+                String pCode = req.getParameter("pCode");
+                String pucharseType = req.getParameter("pucharseType");
+                String TransactionType = req.getParameter("TransactionType");
+                String quantity = req.getParameter("quantity");
+
+                if(pCode.isEmpty() || pucharseType.isEmpty() || TransactionType.isEmpty() 
+                        || quantity.isEmpty()){
+                    req.setAttribute("messages", "Debe introducir todos los parametros.");
+                    req.setAttribute("backPath", req.getContextPath());
+                    req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                    return;
+                }
+
+                TransactionContext tc = null;
+                try {
+                    tc = new DatabaseHandlerTransaction().get(Integer.parseInt(req.getParameter("_id")));
+                } catch (SQLException ex) {
+                    Logger.getLogger(TransactionHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(tc != null){
+                    tc.setProductCode(pCode);
+                    tc.setPucharseType(pucharseType);
+                    tc.setTransactionType(Integer.valueOf(TransactionType));
+                    tc.setQuantity(Integer.parseInt(quantity));
+
+                    new Transaction(tc).update();
+
+                    req.setAttribute("messages", String.format("La transaccion #%s se ha actualizado exitosamente.", tc.getId()));
+                    req.setAttribute("backPath", req.getContextPath());
+                    req.getRequestDispatcher("/result.jsp").forward(req, resp);
+                }
+                break;
+        }
     }
 
     @Override

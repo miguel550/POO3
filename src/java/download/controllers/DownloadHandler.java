@@ -23,6 +23,7 @@
  */
 package download.controllers;
 
+import db.impl.DatabaseHandlerProduct;
 import db.impl.DatabaseHandlerTransaction;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -42,6 +43,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import product.model.ProductContext;
 import transaction.model.TransactionContext;
 
 /**
@@ -115,8 +117,34 @@ public class DownloadHandler extends HttpServlet {
 
     private String getTransationContent() {
         String file = "";
-            
-        return "contenido";
+        try {
+            ArrayList<ProductContext> arrP = (ArrayList<ProductContext>) new DatabaseHandlerProduct().getAll();
+            ArrayList<TransactionContext> arrT;
+            for(ProductContext pc : arrP){
+                file += String.format("Producto: %s  %s\n", pc.getCode(), pc.getName());
+                file += String.format("%s %s %s %s\n", 
+                        "Fecha", 
+                        "Tipo compra", 
+                        "Tipo transaccion", 
+                        "Cantidad");
+                arrT = (ArrayList<TransactionContext>)new DatabaseHandlerTransaction().getDao().queryForEq("productCode", pc.getCode());
+                if(!arrT.isEmpty()){
+                    for(TransactionContext tc : arrT){
+                        file += String.format("%s %s %s %s\n", 
+                                new SimpleDateFormat("dd-MM-yyyy").format(tc.getCreateTime()), 
+                                tc.getPucharseType(), tc.getTransactionType(), 
+                                tc.getQuantity());
+                    }
+                }else{
+                    file += String.format("No hay transacciones con este producto.\n");
+                }
+                file += String.format("Existencia actual: %d\n", 0);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DownloadHandler.class.getName()).log(Level.SEVERE, null, ex);
+            file += String.format("Hubo un error.");
+        }
+        return file;
     }
 
 

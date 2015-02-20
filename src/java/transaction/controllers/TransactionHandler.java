@@ -77,7 +77,7 @@ public class TransactionHandler extends HttpServlet{
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
 
-            new Transaction(new DatabaseHandlerTransaction().get(Integer.parseInt(req.getParameter("_id")))).delete();
+            new DatabaseHandlerTransaction().getDao().deleteById(Integer.parseInt(req.getParameter("_id")));
 
             req.setAttribute("_method", null);
             req.setAttribute("messages", String.format("La transaccion #%s se ha eliminado exitosamente.", req.getParameter("_id")));

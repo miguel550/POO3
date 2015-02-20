@@ -23,24 +23,58 @@
  */
 package db.impl;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+import db.Database;
 import db.DatabaseHandler;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
-import transaction.model.Transaction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import transaction.model.TransactionContext;
 
 /**
  *
  * @author Miguel
  */
-public class DatabaseHandlerTransaction extends DatabaseHandler<Transaction, String>{
-
+public class DatabaseHandlerTransaction extends DatabaseHandler<TransactionContext, Date>{
+    private static ConnectionSource cs;
+    private static Dao<TransactionContext, Integer> dao;
+    public DatabaseHandlerTransaction() throws SQLException{
+        if(cs == null){
+            if(debug)
+                cs = new Database(dbURLDebug).getConnection();
+            else
+                cs = new Database(dbURL).getConnection();
+            dao = DaoManager.createDao(cs, TransactionContext.class);
+        }
+        if(!dao.isTableExists())
+            TableUtils.createTableIfNotExists(cs, TransactionContext.class);
+    }
+    public Dao<TransactionContext, Integer> getDao(){
+        return dao;
+    }
     @Override
-    public List<Transaction> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<TransactionContext> getAll() {
+        try {
+            return dao.queryForAll();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandlerTransaction.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
-    public Transaction get(String code) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public TransactionContext get(Date createdAt) {
+        try {
+            return dao.queryForEq("created_at", createdAt).get(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandlerTransaction.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
 }

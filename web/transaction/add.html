@@ -29,6 +29,40 @@ THE SOFTWARE.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <form action="th" method="post">
+            <table>
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Codigo del producto:
+                        </td>
+                        <td>
+                            <select name="pCode">
+                                <%%>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tipo de compra:</td>
+                        <td><input type="text" name="pucharseType"/></td>
+                    </tr>
+                    <tr>
+                        <td>Tipo de transaccion:</td>
+                        <td><select name="TransactionType">
+                                <option value="0">Salida</option>
+                                <option value="1">Entrada</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Cantidad:</td>
+                        <td><input type="number" name="quantity"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </body>
 </html>

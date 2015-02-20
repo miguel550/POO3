@@ -31,7 +31,7 @@ import java.util.Date;
  * @author Miguel
  */
 public abstract class TimeStamp {
-    @DatabaseField(columnName = "created_at")
+    @DatabaseField(columnName = "created_at", index = true)
     protected java.util.Date createdAt;
     @DatabaseField(columnName = "updated_at")
     protected java.util.Date updatedAt;

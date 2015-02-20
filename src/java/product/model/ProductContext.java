@@ -46,6 +46,8 @@ public class ProductContext extends TimeStamp{
     private double price;
     @DatabaseField(canBeNull = false)
     private String state;
+    @DatabaseField(defaultValue = "0")
+    private int quantity;
     
     private String newCode;
     private boolean codeChange;

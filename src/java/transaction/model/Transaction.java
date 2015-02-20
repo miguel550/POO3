@@ -24,37 +24,69 @@
 package transaction.model;
 
 import db.ICRUD;
+import db.impl.DatabaseHandlerTransaction;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Miguel
  */
 public class Transaction implements ICRUD{
-    private final TransactionContext tc;
+    private TransactionContext tc;
+    private DatabaseHandlerTransaction dht;
     public Transaction(TransactionContext tc){
         this.tc = tc;
+        try {
+            this.dht = new DatabaseHandlerTransaction();
+        } catch (SQLException ex) {
+            Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Hubo un error inicializando DatabaseHandlerTransaction en Transaction");
+        }
     }
     public TransactionContext getTransaction(){
         return this.tc;
     }
     @Override
     public void create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            dht.getDao().create(tc);
+        } catch (SQLException ex) {
+            Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Hubo un error en create de transaction");
+        }
     }
 
     @Override
     public void read() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            tc = dht.getDao().queryForId(tc.getId());
+        } catch (SQLException ex) {
+            Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Hubo un error en read de transaction");
+        }
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                tc.edited();
+        try {
+            dht.getDao().update(tc);
+        } catch (SQLException ex) {
+            Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Hubo un error en update de transaction");
+        }
     }
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            dht.getDao().delete(tc);
+        } catch (SQLException ex) {
+            Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Hubo un error en delete de transaction");
+        }
     }
     
 }

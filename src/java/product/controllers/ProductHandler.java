@@ -97,11 +97,17 @@ public class ProductHandler extends HttpServlet{
             
             try {
                 req.setAttribute("list", new DatabaseHandlerProduct().getAll());
-                req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+                if(req.getParameter("trans")== null)
+                    req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+                else
+                    req.getRequestDispatcher("/transaction/add.jsp").forward(req, resp);
             } catch (SQLException ex) {
                 Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
                 req.setAttribute("list", "ERROR");
-                req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+                if(req.getParameter("trans")== null)
+                    req.getRequestDispatcher("/product/list.jsp").forward(req, resp);
+                else
+                    req.getRequestDispatcher("/transaction/add.jsp").forward(req, resp);
             }
             
         }

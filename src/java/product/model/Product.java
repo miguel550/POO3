@@ -57,7 +57,7 @@ public class Product implements ICRUD{
             dhp.getDao().create(pc);
         } catch (SQLException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Hubo un error en createOrUpdate de product");
+            System.err.println("Hubo un error en create de transaction");
         }
     }
 
@@ -79,6 +79,7 @@ public class Product implements ICRUD{
             if(pc.isCodeChange()) dhp.getDao().updateId(pc, pc.getNewCode());
         } catch (SQLException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Hubo un error en update de transaction");
         }
     }
 

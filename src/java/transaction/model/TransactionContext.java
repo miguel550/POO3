@@ -25,30 +25,40 @@ package transaction.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import db.TimeStamp;
 
 /**
  *
  * @author Miguel
  */
 @DatabaseTable(tableName = "transactions")
-public class TransactionContext {
-    @DatabaseField(id = true, generatedId = true)
+public class TransactionContext extends TimeStamp{
+    @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
-    private String[] productCodes;
+    private String productCode;
     @DatabaseField
     private String PucharseType;
+    @DatabaseField
+    private int TransactionType;
+    @DatabaseField
+    private int quantity;
 
+    public TransactionContext() {
+        super();
+    }
+    
+    
     public int getId() {
         return id;
     }
 
-    public String[] getProductCodes() {
-        return productCodes;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setProductCodes(String[] productCodes) {
-        this.productCodes = productCodes;
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     public String getPucharseType() {
@@ -59,13 +69,20 @@ public class TransactionContext {
         this.PucharseType = PucharseType;
     }
 
-    public String getTransactionType() {
+    public int getTransactionType() {
         return TransactionType;
     }
 
-    public void setTransactionType(String TransactionType) {
+    public void setTransactionType(int TransactionType) {
         this.TransactionType = TransactionType;
     }
-    @DatabaseField
-    private String TransactionType;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
 }
